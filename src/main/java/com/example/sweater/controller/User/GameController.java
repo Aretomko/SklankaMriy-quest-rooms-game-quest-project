@@ -1,8 +1,8 @@
 package com.example.sweater.controller.User;
 
-import com.example.sweater.domain.*;
-import com.example.sweater.repos.*;
-import com.example.sweater.service.*;
+import com.example.sweater.entities.*;
+import com.example.sweater.repos.repos.*;
+import com.example.sweater.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -49,6 +45,8 @@ public class GameController {
     private NoAnswerService noAnswerService;
     @Autowired
     private ChangePagesSequenceService changePagesSequenceService;
+    @Autowired
+    private ValidationService validationService;
 
     @GetMapping("/start/{code}")
     public String startGameTeamGet(@PathVariable String code,
@@ -93,14 +91,15 @@ public class GameController {
         // find all questions which team needs to answer
         List<PageGame> pagesGame = pageGameRepo.FindByGame(game);
         // sorting by ordernumber which can be changed before the game for particular team
-        pagesGame.sort(Comparator.comparing(PageGame::getOrderNumber));
+        Collections.sort(pagesGame);
         // find first still not answered page
         PageGame currentPage = findCurrentPageService.findCurrentPage(pagesGame);
         //if there are no not answered question we we start the game iteration where the game will be finished;
         if (currentPage == null) return gameIterationService.iteration(model, code);
         List<Answer> answers = answerRepo.FindByPageGame(currentPage);
         //checking the answer, if it is right then marking the page as answered
-        answerService.checkAnswer(answers, currentPage,game, answer);
+        answerService.checkAnswer(answers, currentPage,game, answer, model);
+
         return gameIterationService.iteration(model, code);
     }
     @GetMapping("/noAnswer/{code}")
@@ -114,7 +113,7 @@ public class GameController {
 
         List<PageGame> pagesGame = pageGameRepo.FindByGame(currentGame);
 
-        pagesGame.sort(Comparator.comparing(PageGame::getOrderNumber));
+        Collections.sort(pagesGame);
 
         PageGame currentPageGame = findCurrentPageService.findCurrentPage(pagesGame);
         //if there are no not answered question we we start the game iteration where the game will be finished;
@@ -129,6 +128,7 @@ public class GameController {
                                  Map<String, Object> model){
         List<PageGame> pagesGame = null;
         Team currentTeam ;
+        teamId = validationService.validateId(teamId);
         if (teamRepo.findById(Long.valueOf(teamId)).isPresent()) {
             currentTeam = teamRepo.findById(Long.valueOf(teamId)).get();
         }else return "no-such-team-page";
@@ -149,6 +149,7 @@ public class GameController {
                                         @RequestParam String orderNumber,
                                         Map<String, Object> model){
         PageGame currentPageGame;
+        pageId = validationService.validateId(pageId);;
         if (pageGameRepo.findById(Long.valueOf(pageId)).isPresent()) {
             currentPageGame = pageGameRepo.findById(Long.valueOf(pageId)).get();
         }else return "redirect:/admin/getTeams";
@@ -179,6 +180,7 @@ public class GameController {
                                  Map<String, Object> model){
         List<PageGame> pagesGame = null;
         Team currentTeam = null;
+        teamId = validationService.validateId(teamId);
         if (teamRepo.findById(Long.valueOf(teamId)).isPresent()) {
             currentTeam = teamRepo.findById(Long.valueOf(teamId)).get();
         }else return "no-such-team-page";

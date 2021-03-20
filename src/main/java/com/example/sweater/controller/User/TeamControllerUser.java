@@ -1,9 +1,9 @@
 package com.example.sweater.controller.User;
 
-import com.example.sweater.domain.Team;
-import com.example.sweater.repos.QuestRepo;
-import com.example.sweater.repos.TeamRepo;
-import com.example.sweater.service.ValidationService;
+import com.example.sweater.entities.Team;
+import com.example.sweater.repos.repos.QuestRepo;
+import com.example.sweater.repos.repos.TeamRepo;
+import com.example.sweater.service.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +23,7 @@ public class TeamControllerUser {
     public String getTeamRegistrationPage(@PathVariable String questId,
                                           Map<String, Object> model)
     {
+        questId = validationService.validateId(questId);
         model.put("questId", questId);
         return "registration-of-team-user";
     }
@@ -37,6 +38,7 @@ public class TeamControllerUser {
                                    @PathVariable String questId,
                                    Map<String, Object> model){
         Team createdTeam;
+        questId = validationService.validateId(questId);
         if (questRepo.findById(Long.valueOf(questId)).isPresent()){
             createdTeam = new Team(teamName, capName, capNumber, secondCapName, secondCapNumber, quantityOfPlayers, questRepo.findById(Long.valueOf(questId)).get());
         }else {

@@ -1,11 +1,11 @@
 package com.example.sweater.controller.User;
 
-import com.example.sweater.domain.Message;
-import com.example.sweater.domain.Team;
-import com.example.sweater.repos.MessageRepo;
-import com.example.sweater.repos.TeamRepo;
-import com.example.sweater.service.FileService;
-import com.example.sweater.service.GameIterationService;
+import com.example.sweater.entities.Message;
+import com.example.sweater.entities.Team;
+import com.example.sweater.repos.repos.MessageRepo;
+import com.example.sweater.repos.repos.TeamRepo;
+import com.example.sweater.service.service.FileService;
+import com.example.sweater.service.service.GameIterationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class MessageControllerUser {

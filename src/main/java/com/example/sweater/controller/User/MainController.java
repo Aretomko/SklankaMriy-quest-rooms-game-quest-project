@@ -1,9 +1,9 @@
 package com.example.sweater.controller.User;
 
-import com.example.sweater.domain.Baner;
-import com.example.sweater.domain.Quest;
-import com.example.sweater.repos.BanerRepo;
-import com.example.sweater.repos.QuestRepo;
+import com.example.sweater.entities.Baner;
+import com.example.sweater.entities.Quest;
+import com.example.sweater.repos.repos.BanerRepo;
+import com.example.sweater.repos.repos.QuestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

@@ -1,8 +1,9 @@
 package com.example.sweater.controller;
 
-import com.example.sweater.domain.Role;
-import com.example.sweater.domain.User;
-import com.example.sweater.repos.UserRepo;
+import com.example.sweater.entities.Role;
+import com.example.sweater.entities.User;
+import com.example.sweater.repos.repos.UserRepo;
+import com.example.sweater.service.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private ValidationService validationService;
 
     @GetMapping
     public String userList(Model model) {
@@ -47,6 +50,7 @@ public class UserController {
     public String deleteUser(@PathVariable String userId,
                              Model model){
         User user;
+        userId = validationService.validateId(userId);
         if(userRepo.findById(Long.valueOf(userId)).isPresent()){
             user = userRepo.findById(Long.valueOf(userId)).get();
         }else return "redirect:/user";

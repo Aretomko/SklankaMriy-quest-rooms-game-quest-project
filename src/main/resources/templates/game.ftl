@@ -11,24 +11,24 @@
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
         <script>
        <#list hints as hint>
-            var minsHint${hint.id} = 0;
-            var secondsHint${hint.id} =0;
+            var minsHint${hint.time} = 0;
+            var secondsHint${hint.time} =0;
             if (${secondsElapsed} > 0){
-                    var minsHint${hint.id} = ${hint.time} - ${minsElapsed} -1;
-                    var secondsHint${hint.id} = 60 - ${secondsElapsed};
+                    var minsHint${hint.time} = ${hint.time} - ${minsElapsed} -1;
+                    var secondsHint${hint.time} = 60 - ${secondsElapsed};
             }
             if (${secondsElapsed} == 0 ){
-                    var minsHint${hint.id} = ${hint.time} - ${minsElapsed} ;
+                    var minsHint${hint.time} = ${hint.time} - ${minsElapsed} ;
             }
-            function startTimerHint${hint.id}(){
+            function startTimerHint${hint.time}(){
             time = setTimeout(function(){
-                if(secondsHint${hint.id} == 0){secondsHint${hint.id}=59; minsHint${hint.id}--;}
-                if(minsHint${hint.id} < 0){document.getElementById('hintTimer${hint.id}').style.display = "none";}
-                document.getElementById('timerMinutesHint${hint.id}').innerHTML = minsHint${hint.id} +" : ";
-                document.getElementById('timerSecondsHint${hint.id}').innerHTML = secondsHint${hint.id};
-                secondsHint${hint.id}--;
-                if(minsHint${hint.id} ==0 ){if(secondsHint${hint.id} == 0){document.getElementById('${hint.id}').classList.remove('hide');}}
-                startTimerHint${hint.id}();
+                if(secondsHint${hint.time} == 0){secondsHint${hint.time}=59; minsHint${hint.time}--;}
+                if(minsHint${hint.time} < 0){document.getElementById('hintTimer${hint.time}').style.display = "none";}
+                document.getElementById('timerMinutesHint${hint.time}').innerHTML = minsHint${hint.time} +" : ";
+                document.getElementById('timerSecondsHint${hint.time}').innerHTML = secondsHint${hint.time};
+                secondsHint${hint.time}--;
+                if(minsHint${hint.time} ==0 ){if(secondsHint${hint.time} == 0){document.getElementById('${hint.time}').classList.remove('hide');}}
+                startTimerHint${hint.time}();
               },1000);
             }
         </#list>
@@ -112,7 +112,7 @@
      }
      span {color: orange!important;}
    </style>
-<body class="w3" style="font-size:16px;LINE-HEIGHT:12px; background-color: black;" onload="startTimer(), startTimerTimeLimit(), startTimerButtonReload() <#list hints as hint>,startTimerHint${hint.id}()</#list>, elapsedTime()">
+<body class="w3" style="font-size:16px;LINE-HEIGHT:12px; background-color: black;" onload="startTimer(), startTimerTimeLimit(), startTimerButtonReload() <#list hints as hint>,startTimerHint${hint.time}()</#list>, elapsedTime()">
 
 <nav>
   <div class="w3-top">
@@ -174,7 +174,7 @@
                 <p style="color:green;">${multiQuestionAnswer.answers}</p>
                 </#list>
                 </#if>
-                <#if wrongAnswer??> <p style="color:red;">Невірна відповідь</p></#if>
+                <#if wrongAnswer??> <p style="color:red;">Невірна відповідь: ${wrongAnswer}</p></#if>
               <form id="answer" action="" method="post" style="display:none;">
                 <input id="invisibleText" type="text" id="fname" name="answer">
                 <p><button id="invisibleButton" type="submit" class="w3-button w3-padding-large w3-white w3-border"><b>Відповісти »</b></button></p>
@@ -196,7 +196,7 @@
             </div>
           </div>
     <#list hints as hint>
-      <div id="${hint.id}" class="w3-col l8 s12 hide" style="width:100%;padding-left:20px; padding-right:20px;">
+      <div id="${hint.time}" class="w3-col l8 s12 hide" style="width:100%;padding-left:20px; padding-right:20px;">
         <div class="w3-card-4 w3-margin w3-white" style="max-width: 750px; margin-left: auto !important; margin-right: auto !important; color:orange !important; background-color:black !important;">
           <#if hint.isText() == b>
             <div class="w3-container">
@@ -244,7 +244,7 @@
             <div class="w3-container">
                <p><font face="verdana">До автопереходу залишилось: <label id="finishTimerMinutes"></font></label><label id="finishTimerSeconds"></label></p>
                <#list hints as hint>
-                <p id="hintTimer${hint.id}"><font face="verdana">До підказки залишилось: <label id="timerMinutesHint${hint.id}"></label><label id="timerSecondsHint${hint.id}"></font></label></p>
+                <p id="hintTimer${hint.time}"><font face="verdana">До підказки залишилось: <label id="timerMinutesHint${hint.time}"></label><label id="timerSecondsHint${hint.time}"></font></label></p>
                </#list>
                <div id="chat">
                <#if newMessageAlert ==b>

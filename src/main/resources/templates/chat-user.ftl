@@ -35,7 +35,7 @@
                     <div class="w3-col s2" style="padding-top:18px;">
                         <div class="image-upload" align="center">
                             <label for="file-input">
-                                <img src="https://goo.gl/pB9rpQ" style="height:35px; width:50px;"/>
+                                <img src="/static/uploads/upload.png" style="height:35px; width:50px;"/>
                             </label>
                             <input id="file-input" type="file" name="file">
                         </div>
@@ -80,7 +80,7 @@
                   document.getElementById("chat").innerHTML = this.responseText;
                 }
               };
-              xhttp.open("GET", "https://31.31.199.46:8080/getMessagesRest/${code}", true);
+              xhttp.open("GET", "https://sklquest.com/getMessagesRest/${code}", true);
               xhttp.send();
             }
    </script>

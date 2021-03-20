@@ -1,10 +1,10 @@
 package com.example.sweater.controller.User;
 
-import com.example.sweater.domain.Application;
-import com.example.sweater.repos.ApplicationService;
-import com.example.sweater.service.MailSender;
-import com.example.sweater.service.TranslitService;
-import com.example.sweater.service.ValidationService;
+import com.example.sweater.entities.Application;
+import com.example.sweater.repos.repos.ApplicationService;
+import com.example.sweater.service.service.MailSender;
+import com.example.sweater.service.service.TranslitService;
+import com.example.sweater.service.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -59,7 +59,7 @@
                               document.getElementById("chat").innerHTML = this.responseText;
                             }
                           };
-                          xhttp.open("GET", "https://31.31.199.46:8080/admin/getMessagesRest/${code}", true);
+                          xhttp.open("GET", "https://sklquest.com/admin/getMessagesRest/${code}", true);
                           xhttp.send();
                         }
                </script>
